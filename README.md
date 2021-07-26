@@ -1,1 +1,1 @@
-# iPhoneXS_Chager
+# iPhoneXS_Charger
