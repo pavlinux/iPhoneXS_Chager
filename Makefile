@@ -4,6 +4,7 @@ ipchrg: ipchrg.c
 install: ipchrg
 	install -o root -g root -m 755 -s ipchrg /usr/bin/
 	install -o root -g root -m 644 98-ipchrg.rules /etc/udev/rules.d/
+	udevadm control --reload-rules && udevadm trigger;
 
 uninstall:
 	rm -rf /usr/bin/ipchrg
