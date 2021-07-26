@@ -5,7 +5,7 @@
 
 int main(void)
 {
-	int ret = -1;
+	int ret;
 	struct libusb_device_handle *handle;
 	int iface = 0;
 	int active_cfg = -5;
@@ -17,21 +17,21 @@ int main(void)
 	libusb_init(NULL);
 
 	handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
-	if (handle == NULL)
+	if (handle == NULL) {
+		ret = -1;
 		goto out_exit;
+	}
 
-	ret = libusb_get_configuration(handle, &active_cfg);
+	libusb_get_configuration(handle, &active_cfg);
 	if (active_cfg != configId)
 		libusb_set_configuration(handle, configId);
 
-	iface = 0;
 	ret = libusb_claim_interface(handle, iface);
 	if (ret != LIBUSB_SUCCESS)
 		goto out_close;
 
-	ret =
-	    libusb_control_transfer(handle, CTRL_OUT, 0x40, 500,
-				    ADDITIONAL_VALUE_DEFAULT, NULL, 0, 2000);
+	ret = libusb_control_transfer(handle, CTRL_OUT, 0x40, 500,
+				ADDITIONAL_VALUE_DEFAULT, NULL, 0, 2000);
 	if (ret != LIBUSB_SUCCESS)
 		goto out_release;
 
