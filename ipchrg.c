@@ -1,3 +1,7 @@
+/*
+ * Original by Max Korenkov (c) 2011. https://github.com/mkorenkov/ipad_charge 
+ */
+
 #include <libusb-1.0/libusb.h>
 
 #define CTRL_OUT  (LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_OUT)
