@@ -30,8 +30,13 @@ int main(void)
 	if (ret != LIBUSB_SUCCESS)
 		goto out_close;
 
-	ret = libusb_control_transfer(handle, CTRL_OUT, 0x40, 500,
-				ADDITIONAL_VALUE_DEFAULT, NULL, 0, 2000);
+	/* The 3rd and 4th numbers are the extra current in mA that the Apple device 
+	 * may draw in suspend state.  Originally, the 4th was 0x6400, or 25600mA. 
+	 * I believe this was a bug and they meant 0x640, or 1600 mA which would be the max
+	 * for the MFi spec. Also the typical values for the 3nd listed in the MFi spec are:
+	 * 0, 100, 500 so I chose 500 for that. And changed it to decimal to be clearer.
+	 */	
+	ret = libusb_control_transfer(handle, CTRL_OUT, 0x40, 500, ADDITIONAL_VALUE_DEFAULT, NULL, 0, 2000);
 	if (ret != LIBUSB_SUCCESS)
 		goto out_release;
 
